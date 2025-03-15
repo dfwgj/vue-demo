@@ -8,6 +8,7 @@ import router from '@/router';
 import { createPinia } from 'pinia';
 const pinia = createPinia();
 import store from '@/stores/store';
+import { userStore } from './stores/user';
 
 // api
 import api from '@/api/api';
@@ -17,15 +18,6 @@ import api from '@/api/api';
 // import Varlet from '@varlet/ui';
 // import '@varlet/ui/es/style';
 import '@varlet/touch-emulator';
-
-// icons - Font-Awesome
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-library.add(fas, far, fab);
-
 // fonts - DouyinSans
 import '@chinese-fonts/dymh/dist/DouyinSansBold/result.css';
 
@@ -35,4 +27,6 @@ import App from '@/App.vue';
 // global styles
 import '@/style.css';
 
-const app = createApp(App).use(router).use(pinia).use(store).use(api).component('font-awesome-icon', FontAwesomeIcon).mount('#app');
+const app = createApp(App).use(router).use(pinia).use(store).use(api).mount('#app');
+const user = userStore();
+user.decodeToken(); // 解码 Token 并保存到 userStore

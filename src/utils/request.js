@@ -1,4 +1,5 @@
 const apiUrl = import.meta.env.VITE_API_URL;
+import { userStore } from '../stores/user';
 
 // 封装常规请求函数
 const request = {
@@ -8,20 +9,20 @@ const request = {
             .then((res) => {
                 if (!res.ok) {
                     console.error('Request error:', res.statusText);
-                    return false;
+                    return res.json();
                 }
                 return res.json();
             })
             .then((res) => {
                 if (res.code !== 0) {
                     console.error('Request error: Code', res.code);
-                    return false;
+                    return { success: false, error: res.error }; // 返回具体的错误信息
                 }
-                return res.data;
+                return { success: true, data: res.data };
             })
             .catch((error) => {
                 console.error('Request error:', error);
-                return false;
+                return { success: false, error: error.message || '未知错误' }; // 返回捕获的错误信息
             });
     },
     // 封装 GET 请求
@@ -73,8 +74,7 @@ const request = {
         return request.fetch(url, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                Authorization: 'Bearer ' + localStorage.getItem('token')
             },
             body: formData
         });

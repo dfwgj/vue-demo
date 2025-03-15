@@ -12,7 +12,7 @@ export default defineConfig(({ command, mode }) => {
     // vite 配置
     return {
         root: './', // 项目根目录（index.html 文件所在的位置）
-        base: './', // 开发或生产环境服务的公共基础路径
+        base: '/', // 开发或生产环境服务的公共基础路径
         envDir: './config', // 用于加载 .env 文件的目录
         // 配置路径别名
         resolve: {
